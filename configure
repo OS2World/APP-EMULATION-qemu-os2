@@ -266,6 +266,7 @@ strip_opt="yes"
 tcg_interpreter="no"
 bigendian="no"
 mingw32="no"
+os2="no"
 gcov="no"
 gcov_tool="gcov"
 EXESUF=""
@@ -455,6 +456,8 @@ if check_define __linux__ ; then
   targetos="Linux"
 elif check_define _WIN32 ; then
   targetos='MINGW32'
+elif check_define __OS2__ ; then
+  targetos='OS2'
 elif check_define __OpenBSD__ ; then
   targetos='OpenBSD'
 elif check_define __sun__ ; then
@@ -583,6 +586,16 @@ MINGW32*)
   else
     audio_drv_list=""
   fi
+;;
+OS2*)
+  os2="yes"
+  EXESUF=".exe"
+  TMPE="${TMPE}${EXESUF}"
+  OS_LDFLAGS="-Zomf -Zhigh-mem -Zmap -Zbin-files"
+  LIBS="-lcx"
+  audio_possible_drivers="sdl"
+  audio_drv_list="sdl"
+  linux_user="no"
 ;;
 GNU/kFreeBSD)
   bsd="yes"
